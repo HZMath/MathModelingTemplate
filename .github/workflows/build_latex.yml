@@ -1,0 +1,118 @@
+name: Build LaTeX Document
+
+on:
+  workflow_dispatch:
+
+env:
+  # Packages needed for the thesis compilation
+  TL_PACKAGES: |
+    adjustbox
+    algorithmicx
+    algorithms
+    alphalph
+    biber
+    biblatex
+    biblatex-gb7714-2015
+    bibtex
+    booktabs
+    caption
+    carlisle
+    cases
+    catchfile
+    chinese-jfm
+    chngcntr
+    circledsteps
+    cleveref
+    collectbox
+    ctex
+    dvips
+    emptypage
+    enumitem
+    environ
+    extarrows
+    eso-pic
+    fancyhdr
+    fancyvrb
+    float
+    fontaxes
+    framed
+    fvextra
+    gbt7714
+    gsftopk
+    helvetic
+    hologo
+    ifplatform
+    lastpage
+    latexmk
+    lineno
+    listings
+    minted
+    multirow
+    mwe
+    natbib
+    needspace
+    newtx
+    nth
+    oberdiek
+    pdftexcmds
+    pgf
+    pict2e
+    picture
+    realscripts
+    rsfs
+    setspace
+    siunitx
+    tcolorbox
+    texcount
+    texliveonfly
+    threeparttable
+    threeparttablex
+    times
+    titling
+    tocloft
+    trimspaces
+    txfonts
+    ucs
+    upquote
+    was
+    xcolor
+    xecjk
+    xpatch
+    xstring
+    zhnumber
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install TeX Live
+        uses: tex-live/setup-texlive-action@v4
+        with:
+          version: 2026
+          packages: ${{ env.TL_PACKAGES }}
+        env:
+          SETUP_TEXLIVE_ACTION_NO_CACHE_ON_FAILURE: 1
+
+      - name: Build LaTeX Document
+        run: |
+          cd paper/
+          latexmk -xelatex -pdf -shell-escape main.tex
+          cd ..
+
+      - name: Output Errors If Failed
+        if: failure()
+        run: |
+          echo "LaTeX build failed. Outputting log for debugging:"
+          cat paper/main.log
+
+      - name: Upload LaTeX PDF
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          path: paper/main.pdf
+          archive: false
+          retention-days: 90
