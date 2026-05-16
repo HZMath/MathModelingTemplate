@@ -1,0 +1,2 @@
+# MathModelingTemplate
+数学建模比赛代码仓库的简易模版
