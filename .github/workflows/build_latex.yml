@@ -7,6 +7,7 @@ env:
   # Packages needed for the thesis compilation
   TL_PACKAGES: |
     adjustbox
+    abstract
     algorithmicx
     algorithms
     alphalph
@@ -26,6 +27,7 @@ env:
     collectbox
     ctex
     dvips
+    elegantpaper
     emptypage
     enumitem
     environ
@@ -106,7 +108,6 @@ jobs:
       - name: Output Errors If Failed
         if: failure()
         run: |
-          echo "LaTeX build failed. Outputting log for debugging:"
           cat paper/main.log
 
       - name: Upload LaTeX PDF
