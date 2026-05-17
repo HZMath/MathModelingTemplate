@@ -18,19 +18,19 @@ jobs:
 
       - name: Build LaTeX Document
         run: |
-          cd paper/
-          latexmk -xelatex -pdf -shell-escape main.tex
+          cd latex/
+          latexmk -xelatex -shell-escape main.tex
           cd ..
 
       - name: Output Errors If Failed
         if: failure()
         run: |
-          cat paper/main.log
+          cat latex/main.log
 
       - name: Upload LaTeX PDF
         if: success()
         uses: actions/upload-artifact@v7
         with:
-          path: paper/main.pdf
+          path: latex/main.pdf
           archive: false
           retention-days: 90
