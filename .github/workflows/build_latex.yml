@@ -2,6 +2,19 @@ name: Build LaTeX Document
 
 on:
   workflow_dispatch:
+    inputs:
+      file_name:
+        required: true
+        default: main
+        description: 文件名称，无后缀
+      file_path:
+        required: true
+        default: paper
+        description: 文件路径，相对于仓库根目录
+
+env:
+  TEX_FILE_PATH: ${{ inputs.file_path }}
+  TEX_FILE_NAME: ${{ inputs.file_name }}
 
 jobs:
   build:
@@ -18,19 +31,18 @@ jobs:
 
       - name: Build LaTeX Document
         run: |
-          cd paper/
-          latexmk -xelatex -shell-escape main.tex
-          cd ..
+          cd ${{ env.TEX_FILE_PATH }}
+          latexmk -xelatex -shell-escape "${{ env.TEX_FILE_NAME }}.tex"
 
       - name: Output Errors If Failed
         if: failure()
         run: |
-          cat paper/main.log
+          cat "${{ env.TEX_FILE_PATH }}/${{ env.TEX_FILE_NAME }}.log"
 
       - name: Upload LaTeX PDF
         if: success()
         uses: actions/upload-artifact@v7
         with:
-          path: paper/main.pdf
+          path: ${{ env.TEX_FILE_PATH }}/${{ env.TEX_FILE_NAME }}.pdf
           archive: false
           retention-days: 90
