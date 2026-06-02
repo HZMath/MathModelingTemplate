@@ -1,5 +1,7 @@
+from program.utils.logger import logger
+
 def main():
-    pass
+    logger.info("Hello World!")
 
 if __name__ == "__main__":
     main()
