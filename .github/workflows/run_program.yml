@@ -35,12 +35,12 @@ jobs:
           uv pip install -e .
           uv run python src/program/main.py
 
-      # - name: Upload Logs
-      #   if: always()
-      #   uses: actions/upload-artifact@v7
-      #   with:
-      #     name: logs
-      #     path: logs/
-      #     archive: true
-      #     retention-days: 90
-      #     if-no-files-found: ignore
+      - name: Upload Logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: logs
+          path: logs/
+          archive: true
+          retention-days: 90
+          if-no-files-found: ignore
