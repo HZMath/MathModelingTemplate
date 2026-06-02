@@ -5,6 +5,7 @@ description = "Add your descriptions here"
 dependencies = [
   "numpy",
   "pandas",
+  "colorlog",
 ]
 authors = [
   {name = "Example Person", email = "someone@example.com"},
