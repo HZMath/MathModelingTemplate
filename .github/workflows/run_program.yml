@@ -29,11 +29,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install uv
           uv sync
+
+      - name: Build and Install Program
+        run: |
           uv pip install -e .
 
       - name: Run Program
         run: |
-          uv run python src/program/main.py
+          uv run src/program/main.py
 
       - name: Upload Logs
         if: always()
