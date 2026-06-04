@@ -2,6 +2,9 @@ name: Build LaTeX Document
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - paper/*
 
 jobs:
   build:
