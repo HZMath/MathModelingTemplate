@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[citestyle=gb7714-2015, bibstyle=gb7714-2015]{elegantpaper}
 
 \usepackage{amsmath}
 
@@ -6,13 +6,29 @@
 \author{xieyuen}
 \date{\today}
 
+\addbibresource[location=local]{reference.bib}
+
 \begin{document}
     \maketitle
     \begin{abstract}
         This is abstract
     \end{abstract}
+
+    \newpage
+    \tableofcontents
+
     \section{Test}\label{sec:test}
     Test sec
     \subsection{Test Subsec}\label{subsec:test_subsec}
     Test subsec
+    
+    \nocite{*}
+    \printbibliography[heading=bibintoc, title=\ebibname]
+
+    \appendix
+    \appendixpage
+
+    awa
+
+    \addappheadtotoc
 \end{document}
