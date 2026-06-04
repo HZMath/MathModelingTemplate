@@ -2,6 +2,9 @@ name: Build LaTeX Document
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - paper/*
 
 jobs:
   build:
@@ -22,10 +25,12 @@ jobs:
           latexmk -xelatex -shell-escape main.tex
           cd ..
 
-      - name: Output Errors If Failed
+      - name: Upload Error Logs
         if: failure()
-        run: |
-          cat paper/main.log
+        uses: actions/upload-artifact@v7
+        with:
+          path: paper/main.log
+          archive: false
 
       - name: Upload LaTeX PDF
         if: success()
