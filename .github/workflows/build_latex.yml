@@ -22,7 +22,7 @@ jobs:
       - name: Build LaTeX Document
         run: |
           cd paper/
-          latexmk -xelatex -shell-escape main.tex
+          latexmk -xelatex main.tex
           cd ..
 
       - name: Upload Error Logs
